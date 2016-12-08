@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-ng-app="drvSchool">
+  <head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Driving School App - Uma nova maneira de estudar</title>
+    <!-- LumX(Material Design) CSS and font Roboto -->
+    <link rel="stylesheet" href="bower_components/lumx/dist/lumx.css">
+    <link rel="stylesheet" href="src/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="wrapper">
+        <header>
+            <div scroll data-ng-class="{navbarcolor:classAdd}" class="card fixed-top">
+                <div class="container toolbar">
+                    <span class="toolbar__label fs-title">Driving School</span>
+                    <div class="toolbar__right">
+                        <div class="toolbar__menu">
+                            <ul class="menus">
+                              <li class="opt__menu active">
+                                  <a class="btn btn--l btn--white btn--flat" lx-ripple href="#">Home</a>
+                              </li>
+                              <li class="opt__menu">
+                                  <a class="btn btn--l btn--white btn--flat" lx-ripple href="#about">About</a>
+                              </li>
+                              <li class="opt__menu">
+                                  <a class="btn btn--l btn--white btn--flat" lx-ripple href="#contact">Contact</a>
+                              </li>
+                              <li class="opt__menu">
+                                  <a class="btn btn--l btn--white btn--flat" lx-ripple href="#team">Team</a>
+                              </li>
+                              <li class="opt__menu">
+                                  <a class="btn btn--l btn--white btn--flat" lx-ripple href="#feedback">Feedback</a>
+                              </li>
+                              <li class="opt__menu">
+                                  <a class="btn btn--l btn--white btn--flat" lx-ripple href="#login">Login</a>
+                              </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header__content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 intro-text">
+                            <!-- TEXT -->
+                            <div class="main">
+                                <h1>Best way to <br/><span class="rotate text-color">present</span> your App </h1>
+                            </div>
+                            <p class="medium_white_light">We ensure quality &amp; support. People love us &amp; we love them. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </p>
+                                <!-- Link -->
+                                <span class="page-scroll">
+                                <a href="#welcome" class="btn btn--xl btn--blue btn--raised" lx-ripple>Learn More</a>
+                                </span>
+                                <!-- Link -->
+                                <span class="page-scroll">
+                                <a href="#download-now" class="btn btn--xl btn--blue btn--flat" lx-ripple>Download now</a>
+                                </span> 
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Image -->
+                            <img src="src/img/bg-smartphone.png" alt="" class="img-responsive img-header">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section id="about" class="card text-center">
+                <div class="container">
+                    <h2 class="title">Welcome to Driving School</h2>
+                    <hr>
+                    <p class="description">Rapido, fácil e divertido é como você vai comprar e vender daqui pra frente usando o Driving School</p>
+                    <ul class="list__benefits">
+                        <li>
+                            <img src="src/img/take-a-picture.png">
+                            <h3>Fotografe o produto <br> que quer vender</h3>
+                            <p>Faça aquela foto "like a boss" de preferência de dia pra ficar irada!</p>
+                        </li>
+                        <li>
+                            <img src="src/img/close-to-you.png">
+                            <h3>ou encontre o que você<br> tanto procura</h3>
+                            <p>Ache o seu precioso, aquilo que você tanto queria e não achava.</p>
+                        </li>
+                        <li>
+                            <img src="src/img/free-social-close.png">
+                            <h3> é de graça, rápido<br>e perto de você</h3>
+                            <p>Vamos ajudar você a achar o que estiver mais perto pra facilitar.</p>
+                        </li>
+                        <li>
+                            <img src="src/img/make-deal.png">
+                            <h3>olhou pro lado,<br> negócio fechado.</h3>
+                            <p>Com chat integrado fica bem mais fácil de marcar encontro e fechar negócio.</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section id="contact">
+                <div class="container">
+                    <h2 class="section-heading">We've got what you need!</h2>
+                    <hr class="light">
+                    <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
+                    <a href="#" class="btn btn-default btn-xl">Get Started!</a>
+                </div>
+            </section>
+            <section id="feedback">
+                <div class="container">
+                    <h2 class="section-heading">We've got what you need!</h2>
+                    <hr class="light">
+                    <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
+                    <a href="#" class="btn btn-default btn-xl">Get Started!</a>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <h5>Lorem ipsum dolor sit amet</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis explicabo nobis ea debitis quasi sequi praesentium dolore neque iste, molestias odit et sunt maiores modi dolores porro aperiam beatae veniam.</p>
+        </footer>
+    </div>
+    <!-- jQuery, Velocity, Moment, Angular then LumX(Material Design) JS. -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/velocity/velocity.js"></script>
+    <script src="bower_components/moment/min/moment-with-locales.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/lumx/dist/lumx.js"></script>
+    <script src="src/js/app.js"></script>
+  </body>
+</html>

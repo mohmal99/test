@@ -1,0 +1,78 @@
+ <div class="container-fluid">
+         <!-- Navigation -->
+     <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">إسم السيستم</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li> <a href="health-main.php"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية</a></li>
+                <li> <a href="students-inhealth.php"><i class="fa fa-user-md" aria-hidden="true"></i> طلبات الفحوصات الطبية </a></li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-building" aria-hidden="true"></i> الصحة <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-cogs" aria-hidden="true"></i> تغيير الرقم السري </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> تسجيل الخروج</a>
+                        </li>
+                    </ul>
+                </li>
+             </ul>
+            </div>
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	        <div class="modal-dialog">
+		      <div class="modal-content">
+  
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel"> تغيير الرقم السري </h4>
+			</div> <!-- /.modal-header -->
+	    	<div class="modal-body">
+			 <form role="form">
+			  <fieldset>
+                  <div class="form-group input-group">
+                    <span class="input-group-addon">
+                     <i class="glyphicon glyphicon-lock"></i>
+                    </span>
+                   <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="الرقم السري القديم" required>
+                 </div>
+                  <div class="form-group input-group">
+                      <span class="input-group-addon">
+                         <i class="glyphicon glyphicon-lock"></i>
+                      </span>
+                    <input type="password" data-minlength="6" class="form-control" id="password" placeholder="الرقم السري الجديد" required>
+                 </div>
+                 <div class="form-group input-group">
+                      <span class="input-group-addon">
+                         <i class="glyphicon glyphicon-lock"></i>
+                      </span> 
+                      <input type="password" class="form-control" id="confirmPassword" placeholder="تأكيد الرقم السري الجديد" required>
+                     <div class="help-block with-errors"></div>
+                 </div>
+                 <div class="form-group">
+                      <p class="help-block">
+                      <a class="pull-right text-muted" href="#" id="olvidado"><small> هل نسيت الرقم السري؟ </small></a> </p>
+                </div>
+                  <div class="modal-footer">
+		               <button class="form-control btn btn-primary" type="submit">تسجيل الدخول</button>
+                   </div> <!-- /.modal-footer -->
+             </fieldset>
+	       </form>
+         </div> <!-- /.modal-body -->
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+            <!-- /.navbar-collapse -->
+    </nav>

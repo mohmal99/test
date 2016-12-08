@@ -1,0 +1,9 @@
+TO DOO !!! -->session if go to another type of page !! check the type and return to the main page of the related type !! :D 
+cant back to login until logout !! back will make you stay at your type main page
+
+
+
+Export buttons ::
+https://datatables.net/extensions/buttons/examples/initialisation/export.html
+
+check toryadate and testdate on add and edit !! 
