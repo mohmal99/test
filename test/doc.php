@@ -1,9 +1,8 @@
 <?php session_start();
-if(isset($_SESSION['email']) && $_SESSION['type']=="health" ) 
+if(isset($_SESSION['email']) && $_SESSION['type']=="health") 
 {
-  
-include("health-nav.php");
 include 'doc-data.php';
+
 
         
 ?><!DOCTYPE html>
@@ -26,7 +25,8 @@ include 'doc-data.php';
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/sb-admin-rtl.css" rel="stylesheet">
-
+<!-- Date Bicker CSS -->
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <!-- Morris Charts CSS -->
     <link href="css/plugins/morris.css" rel="stylesheet">
      <!-- Custom Fonts -->
@@ -37,8 +37,7 @@ include 'doc-data.php';
           max-width: 100%;
           padding-right: 0;
           padding-left: 0;
-         } 
-   /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+         } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
   .center{
      text-align: center;
   }
@@ -48,7 +47,7 @@ include 'doc-data.php';
 <body >
     <div class="container-fluid">
          <!-- Navigation -->
-          <?php include 'health-nav.html';?>
+          <?php include 'health-nav.php';?>
 
                 <!-- Page Heading -->
                 <div class="row">
@@ -60,7 +59,7 @@ include 'doc-data.php';
                             <li>
 				        	  <a  href="health-main.php"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية </a> <span class="divider"></span>
 				           </li>
-                   <li>
+                           <li>
 				        	  <a  href="students-inhealth.php"> <i class="fa fa-home" aria-hidden="true"></i> طلبات الفحوصات الطبية </a> <span class="divider"></span>
 				           </li>
 				           <li class="active">
@@ -80,7 +79,7 @@ include 'doc-data.php';
                         <div class="panel-body">
                            <div class="row">
 		                     <div class="col-md-4">
-                              <form method="post" class="form">
+                              <form class="form">
                                  <h2>دولة فلـــــســــــطين</h2>
                                  <h3>وزارة النقل والمواصلات</h3>
 		                     </div>
@@ -95,10 +94,15 @@ include 'doc-data.php';
                                  <h2>الإدارة العامة لسلطة الترخيص</h2>
 	                    	 </div>
                     	  </div>
+                        <?php 
+
+                        //read governorate info.
                         
-                         <div class="row">
+                       
+                        ?>
+                          <div class="row">
                              <div class="col-md-10">
-                              <h4> إلى إدارة الترخيص في - <?php echo $govrow['GovernorateName']; ?></h4>
+                              <h4> إلى إدارة الترخيص في - <ins><?php echo $govrow['GovernorateName']; ?></ins></h4>
                               <h4> أنا المذكور أدناه أطلب بهذا رخصة سياقة لمركبة ميكانيكية من نوع 
                                <?php echo $row['licencetype'];?> </h4>
                               <h4> وبحوزتي رخصة سياقة رقم <?php if($prelicencerow['LicenceNo']!=0)
@@ -186,30 +190,31 @@ include 'doc-data.php';
                                </div>
                                <div class="form-group">
                                   <input type="text" class="form-control" id="" 
-                                  value=<?php echo $row['FirstName'];
-                                  ?>
-                                  placeholder="الإسم الكامل" required>
+                                  value="<?php echo $row['FirstName'];
+                                  ?>"
+                                  placeholder="الإسم الكامل" readonly>
                                </div>
-                              
+                               
+                                
                                <div class="form-group">
                                   <p class="form-control-static"> ووجدته </p>
                                </div>
                                <label class="form-check-inline">
-                                   <input class="form-check-input" type="radio" name="v" id="" value="option1" <?php if($medicalrow['appropriate']==1) {?>checked <?php }?>> أهل/أهلة
+                                   <input class="form-check-input" type="radio" name="v" id="" value="option1" <?php if($medicalrow['appropriate']==1) {?>checked <?php }?>disabled> أهل/أهلة
                              </label>
                              <label class="form-check-inline ">
-                                  <input <?php if($medicalrow['appropriate']==0)  {?>checked <?php }?> class="form-check-input" type="radio" name="v" id="" value="option2"  > غيرأهل/أهلة
+                                  <input <?php if($medicalrow['appropriate']==0)  {?>checked <?php }?> class="form-check-input" type="radio" name="v" id="" value="option2"  disabled> غيرأهل/أهلة
                              </label>
-                           
+                          
                              <div class="form-group">
                                   <p class="form-control-static"> من ناحية صحته/صحتها. السوق بمركبة من النوع الذي قدم من أجله الطلب أعلاه وحسب قابليته المثبتة في القانون والتعليمات الموضحة أدناه:</p>
                              </div>  
                            </div> 
                            <br> 
                            <div class="form-group ">
-                                  <textarea name="details" class="form-control" rows="2" id="" placeholder="تفاصيل أخرى..">
-                                   <?php echo $medicalrow['details'];?>
-                                   </textarea>
+                                  <textarea readonly class="form-control" rows="2" id="" required>
+                                    <?php echo $medicalrow['details'];?>
+                                  </textarea>
                           </div>
                          
                          </th>
@@ -227,75 +232,62 @@ include 'doc-data.php';
                         <tr>
                         <th>العين اليمنى</th>
                         <td>
-                            <div class="form-group">
-                            <select name="righteye" class="form-control" id="" required>
-
-                                   <option <?php if($medicalrow['righteye']=='6/6') {?>selected <?php } ?> >6/6</option>
-                                   <option <?php if($medicalrow['righteye']=='6/9') {?>selected <?php }?>  >6/9</option>
-                                   <option <?php if($medicalrow['righteye']=='6/12') {?>selected <?php }?> >6/12</option>
-                                   <option <?php if($medicalrow['righteye']=="6/24") {?>selected <?php }?> >6/24</option>
-                                   <option <?php if($medicalrow['righteye']=='6/36') {?>selected <?php }?> >6/36</option>
-                                   <option <?php if($medicalrow['righteye']=='6/60') {?>selected <?php }?> >6/60</option>
-                                 </select>
-                             </div>
+                            <?php  echo $medicalrow['righteye']; ?>
                         </td>
                         <td>
-                          <div class="form-group">
-                            <select name="rightglasses" class="form-control" id="" required>
-                              <option>لائق مع نظارات </option>
-                              <option>لائق بدون نظارات</option>
-                            </select>
-                          </div>
+                          
+                             <?php if($medicalrow['rightglasses']==1)
+                            echo "لائق مع نظارات";
+                            else if($medicalrow['rightglasses']==0)
+                              echo "لائق بدون نظارات";
+                              ?>
+                              
                         </td>
                         </tr>
                          <tr>
                         <th>العين اليسرى</th>
                         <td>
-                          <div class="form-group">
-                            <select name="lefteye"class="form-control" id="" required>
-                              <option <?php if($medicalrow['lefteye']=='6/6') {?>selected <?php } ?> >6/6</option>
-                                   <option <?php if($medicalrow['lefteye']=='6/9') {?>selected <?php }?>  >6/9</option>
-                                   <option <?php if($medicalrow['lefteye']=='6/12') {?>selected <?php }?> >6/12</option>
-                                   <option <?php if($medicalrow['lefteye']=="6/24") {?>selected <?php }?> >6/24</option>
-                                   <option <?php if($medicalrow['lefteye']=='6/36') {?>selected <?php }?> >6/36</option>
-                                   <option <?php if($medicalrow['lefteye']=='6/60') {?>selected <?php }?> >6/60</option>
-                            </select>
-                          </div>
+                          <?php 
+                          echo $medicalrow['lefteye']; ?>
+                            
+                              
                         </td>
                         <td>
-                          <div class="form-group">
-                            <select name="leftglasses" class="form-control" id="" required>
-                              <option>لائق مع نظارات </option>
-                              <option>لائق بدون نظارات</option>
-                            </select>
-                          </div>
+                          <?php 
+                          if($medicalrow['leftglasses']==1)
+                            echo "لائق مع نظارات";
+                            else if($medicalrow['leftglasses']==0)
+                              echo "لائق بدون نظارات";
+                              ?>
                         </td>
                         </tr>
                        <tr>
                         <th>زمرة الدم</th>
                          <td colspan="2">
-                          <div class="form-group col-md-4">
-                            <select name="bloodtype" class="form-control" id="">
-                              <option <?php if($medicalrow['bloodtype']=='AB+') {?>selected  <?php }?> >AB+</option>
-                              <option <?php if($medicalrow['bloodtype']=='AB-') {?>selected <?php }?>>AB−</option>
-                              <option<?php if($medicalrow['bloodtype']=='B+') {?>selected <?php }?>>B+</option>
-                              <option<?php if($medicalrow['bloodtype']=='B−') {?>selected <?php }?>>B−</option>
-                              <option<?php if($medicalrow['bloodtype']=='A+') {?>selected <?php }?>>A+</option>
-                              <option<?php if($medicalrow['bloodtype']=='A−') {?>selected <?php }?>>A−</option>
-                              <option<?php if($medicalrow['bloodtype']=='O+') {?>selected <?php }?>>O+</option>
-                              <option<?php if($medicalrow['bloodtype']=='O-') {?>selected <?php }?>>O-</option>
-                            </select>
-                          </div>
+                          <?php 
+                          echo $medicalrow['bloodtype'];
+                              ?>
                          </td>
                        </tr>
                     </tbody>
                     <thead aria-colspan="4">
-                       <tr>
+                      <tr>
                          <th colspan="4">
-                                <div class="form-group col-md-6">
+                           <div class="form-inline row">
+                              <div class="form-group col-md-6 col-sm-6">
+                               <label for=""> التاريخ</label>
+                               <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                  
+                                  <input  value=<?php echo $medicalrow['Date']; ?> class="form-control" size="16" type="text" value="" readonly >
+                                </div>
+                        <input type="hidden" id="dtp_input2" value="" /><br/>
+                               </div>
+                                <div class="form-group">
                                   <label for=""> إسم الطبيب</label>
-                                  <input name="drname" value="<?php echo $medicalrow['DrName']; ?>"type="text" class="form-control" id="" placeholder="إسم الطبيب" required>
-                               </div> 
+                                  <input type="text" value="<?php echo $medicalrow['DrName'];?>" class="form-control" id="" readonly placeholder="إسم الطبيب" >
+                               </div>
+                           </div>
+                           
                          </th>  
                        </tr>
                     </thead>
@@ -304,13 +296,7 @@ include 'doc-data.php';
            </div>
         </div>
         <br>
-         <div class="row">
-             <div class="form-group col-md-4 col-md-offset-5">
-              <button type="submit" name="add" class="btn btn-primary btn-lg" > تثبيت <i class="fa fa-check-square-o" aria-hidden="true"></i> </button>
-
-              </div>
-              
-         </div>
+         
       </form>
      </div>
     </div>
@@ -362,41 +348,4 @@ include 'doc-data.php';
     <script src="js/bootstrap.min.js"></script> 
 </body>
 </html>
-<?php }else header("Location:login.php");
-if(isset($_POST['add']))
-{
-$appropriate=$_POST['appropriate'];
-$details=$_POST['details'];
-$righteye=$_POST['righteye'];
-$lefteye=$_POST['lefteye'];
-$rightglasses=$_POST['rightglasses'];
-$leftglasses=$_POST['leftglasses'];
-$drname=$_POST['drname'];
-$bloodtype=$_POST['bloodtype'];
-if($appropriate=='on')
-  $appropriate=1;
-else
-  $appropriate=0;
-if($rightglasses=="لائق مع نظارات")
-  $rightglasses=1;
-else
-  $rightglasses=0;
-if($leftglasses=="لائق مع نظارات")
-  $leftglasses=1;
-else
-  $leftglasses=0;
-
-$updatesql="UPDATE medicaltest set appropriate=$appropriate, details='$details',DrName='$drname',
-Date=NOW(),righteye='$righteye',lefteye='$lefteye',rightglasses=$rightglasses,leftglasses=$leftglasses,bloodtype='$bloodtype',
-submitted=1 where UserId=$user_id";
-mysql_query($updatesql,$connection) or die(mysql_error());
-  echo '<script>window.location.href = "students-inhealth.php";</script>';
-
-
-
-}
-
-
-
-
-?>
+<?php }else header("Location:login.php");?>

@@ -43,6 +43,8 @@ if(isset($_SESSION['email']) && $_SESSION['type']=="school")
 </head>
 
 <body >
+    <div class="container-fluid">
+
     <?php include 'school-nav.php'; ?>
                 <!-- Page Heading -->
                 <div class="row">

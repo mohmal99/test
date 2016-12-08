@@ -8,8 +8,9 @@ $healthloginid=$_SESSION['id'];
  $medicalresult=mysql_query($sqlmedical,$connection) or die(mysql_query());
   $medicalrow=mysql_fetch_array($medicalresult);
 
-   $sql="select concat(FirstName,' ',FatherName,' ',GFatherName,' ',FamilyName) as name,FirstName,FatherName,GFatherName,FamilyName,DateOfBirth,IDN,Street,Gender,Licence.Type as licencetype from users
-         JOIN Licence on users.LicenceId=Licence.LicenceId  where UserId=$user_id";
+   $sql="select concat(FirstName,' ',FatherName,' ',GFatherName,' ',FamilyName) as name,FirstName,FatherName
+   ,GFatherName,FamilyName,DateOfBirth,IDN,Street,Gender,Licence.Type as licencetype from users,
+         Licence where users.LicenceId=Licence.LicenceId  and UserId=$user_id";
         $result=mysql_query($sql,$connection)or die(mysql_error());
         $row=mysql_fetch_array($result);
         if($row['Gender']=='f')

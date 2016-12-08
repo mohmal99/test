@@ -6,8 +6,10 @@ if(isset($_SESSION['id']) && $_SESSION['type']=="school")
 
 $id =$_GET['user_id'];
 include("config.php");
-include("schooldata.php");
-
+$studentsarray=array();
+$studentsarray=$_SESSION['studentsarray'];
+if(in_array($id,$studentsarray))
+{
 
 ?>
 <html dir="rtl" lang="en">
@@ -53,8 +55,8 @@ include("schooldata.php");
                            <?php echo $_SESSION['schoolname']; ?> <small>لتعليم السياقة</small>
                         </h1>
                         <ol class="breadcrumb">
-                            <li>
-				        	  <a href="school.php"> الرئيسية </a> <span class="divider"></span>
+                             <li>
+				        	  <a href="school.php"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية </a> <span class="divider"></span>
 				           </li>
                            <li>
 				        	  <a href="show-students.php"> عرض الطلاب </a> <span class="divider"></span>
@@ -328,8 +330,16 @@ $(".input-number").keydown(function (e) {
     </script>
 </body>
 </html>
-<?php }else
+<?php 
+}else header("location:show-students.php");
+
+
+}else
 header("location:login.php");
+
+
+
+
 if(isset($_POST['add']))
 {
 $amount=$_POST['amount'];

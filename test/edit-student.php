@@ -4,10 +4,14 @@
 if(isset($_SESSION['id']) && $_SESSION['type']=="school") 
 
 {include("Config.php");
-include("schooldata.php");
 
   $id =$_GET['user_id'];
+$studentsarray=array();
+$studentsarray=$_SESSION['studentsarray'];
+if(in_array($id,$studentsarray))
+{
 
+   
   $query=mysql_query("select * from users,governorate 
     where users.GovernorateID=governorate.GovernorateID and users.UserId=$id",$connection)or die(mysql_error());
   $row=mysql_fetch_array($query);
@@ -306,7 +310,9 @@ include("schooldata.php");
 
 </html>
 <?php 
- } else 
+
+}else header("Location:show-students.php");
+}else 
 header("Location:login.php");
 
 if (isset($_POST['update'])) {

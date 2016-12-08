@@ -32,20 +32,23 @@ if($row=mysql_fetch_array($loginresult))
     else
     if($row['Type']=="school")
       {
-      
-      $schoolsql="select * from Schools where Email='$email'";
+      $studentsarray=array();
+      $schoolsql="select * from users,userschool,schools where users.UserId=userschool.UserId and schools.Email='$email'
+and schools.SchoolId=userschool.SchoolId";
           $schoolresult=mysql_query($schoolsql,$connection);
-          if($schoolrow=mysql_fetch_array($schoolresult))
+          while($schoolrow=mysql_fetch_array($schoolresult))
             {
+           array_push($studentsarray,$schoolrow['UserId']);
             
             $_SESSION['id']=$row[0];
             $_SESSION['email']=$email;
             $_SESSION['type']="school";
-            $_SESSION['schoolname']=$schoolrow[1];
-            $_SESSION['schoolid']=$schoolrow[0];
-
+            $_SESSION['schoolname']=$schoolrow['SchoolName'];
+            $_SESSION['schoolid']=$schoolrow['schoolid'];
+            $_SESSION['studentsarray']=$studentsarray;
             header("Location:school.php");
             }
+  
             
       }//if a school
       else
@@ -174,10 +177,12 @@ if($row['Type']=="traffic")
             <div style="padding-top:50px" class="panel-body" >
               <form role="form" method="POST" data-toggle="validator">
 			    <fieldset>
-                  <div class="form-group input-group">
+                  <div class="form-group has-feedback">
+                      <div  class="input-group">
                      <span class="input-group-addon">@</span>
                      <label for="inputEmail" class="control-label"></label>
                      <input type="email" class="form-control" name="email" id="inputEmail" placeholder="الإيميل" data-error="Bruh, that email address is invalid" required>
+                  </div>
                   </div>
                   <div class="form-group input-group">
                      <span class="input-group-addon">

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+    <?php include 'schooldata.php';?>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,7 +14,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li> <a href="#"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية</a></li>
+                    <li> <a href="school.php"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users" aria-hidden="true"></i></i> الطلاب <b class="caret"></b></a>
                     <ul class="dropdown-menu">

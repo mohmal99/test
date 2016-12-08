@@ -45,7 +45,7 @@ $healthdepartmentname= $_SESSION['healthname'];
 </head>
 <body >
        <div class="container-fluid">
-            <?php include 'health-nav.html';?>
+            <?php include 'health-nav.php';?>
 
                 <!-- Page Heading -->
                 <div class="row">

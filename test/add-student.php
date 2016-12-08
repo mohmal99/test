@@ -6,7 +6,6 @@ if(isset($_SESSION['id']) && $_SESSION['type']=="school")
 {
 $loginid=$_SESSION['id'];
   include("Config.php");
-  include("schooldata.php");
 
 
 ?>

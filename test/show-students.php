@@ -6,8 +6,8 @@ if(isset($_SESSION['id']) && $_SESSION['type']=="school")
    
 $loginid=$_SESSION['id'];
   include("Config.php"); 
-include("schooldata.php");
-
+echo $_SESSION['schoolid'];
+include'schooldata.php';
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="en">
@@ -22,7 +22,7 @@ include("schooldata.php");
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="DataTables/data.css" rel="stylesheet">
     <!-- Bootstrap Core CSS RTL-->
     <link href="css/bootstrap-rtl.min.css" rel="stylesheet">
      <link href="css/slide.css" rel="stylesheet">
@@ -34,6 +34,7 @@ include("schooldata.php");
     <link href="css/plugins/morris.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="DataTables/datatables.css">
 <style type="text/css">
    body { background: white !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
 </style>
@@ -89,11 +90,11 @@ include("schooldata.php");
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            <?php echo $_SESSION['schoolname'] ?><small>لتعليم السياقة</small>
+                            <?php echo $_SESSION['schoolname']; ?><small>لتعليم السياقة</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-				        	  <a href="school.php"> الرئيسية </a> <span class="divider"></span>
+				        	  <a href="school.php"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية </a> <span class="divider"></span>
 				           </li>
 				           <li class="active">
 					          عرض الطلاب
@@ -122,18 +123,33 @@ include("schooldata.php");
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
-                       <tr>
+                       <tr class="success">
                          <th> اسم الطالب </th>
                          <th> اسم الاب</th>
                          <th> اسم الجد </th>
                          <th>  إسم العائلة </th>
                          <th> رقم الهوية </th>
                          <th> رقم الهاتف </th>
-                         <th  >حذف </th>
+                         <th >حذف </th>
                          <th  > تعديل </th>
-                         <th  > عرض </th>
+                         <th> عرض </th>
+                          <th  > تقديم الطلب </th>
                        </tr>
                     </thead>
+                    <tfoot>
+                     <tr class="success">
+                         <th> اسم الطالب </th>
+                         <th> اسم الاب</th>
+                         <th> اسم الجد </th>
+                         <th>  إسم العائلة </th>
+                         <th> رقم الهوية </th>
+                         <th> رقم الهاتف </th>
+                         <th >حذف </th>
+                         <th  > تعديل </th>
+                         <th> عرض </th>
+                          <th  > تقديم الطلب </th>
+                       </tr>
+                    </tfoot>
                     <tbody>
                     <?php 
           $sql="select * from users,schools,userschool where userschool.UserId=users.UserId
@@ -183,13 +199,13 @@ include("schooldata.php");
                            <button type='button' class='btn btn-primary'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>
                            </a>
                             <td>
-                            <a href="payments.php<?php echo"?user_id=$userid"; ?>">
+                            <a href="payments.php<?php echo"?user_id=$userid";?>">
                            <button type='button' class='btn btn-success'><i class='fa fa-eye' aria-hidden='true'></i></button>
                              </a>
                           </div>
                          </td>
                          <td>
-                            <a href="licence-application.php<?php echo"?user_id=$userid"; ?>">
+                            <a href="licence-application.php<?php echo"?user_id=$userid";?>">
                            <button type='button' class='btn btn-success'><i class='fa fa-eye' aria-hidden='true'></i></button>
                              </a>
                           </div>
@@ -302,6 +318,8 @@ header("Location:login.php");
 
 
 ?>
+
+
 </body>
 
 </html>

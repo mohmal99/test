@@ -4,10 +4,36 @@
 if(isset($_SESSION['id']) && $_SESSION['type']=="school") 
 
 {
+  
+  
+  include 'config.php';
 $loginid=$_SESSION['id'];
-  include("Config.php"); 
-include("schooldata.php");
+$user_id=$_GET['user_id'];
+$studentsarray=array();
+$studentsarray=$_SESSION['studentsarray'];
+if(in_array($user_id,$studentsarray))
+{
 
+$sqlstudent="select *,count(*) as count
+from users u,trafficdepartment t,licence l
+LEFT JOIN medicaltest on medicaltest.UserId=$user_id
+
+  where u.UserId=$user_id  and
+u.GovernorateID=t.GovernorateID and l.LicenceId=u.LicenceId";
+$resultstudent=mysql_query($sqlstudent,$connection) or die(mysql_error());
+$rowstudent=mysql_fetch_array($resultstudent);
+
+$sqllicence="select * from prelicence,licence where prelicence.UserId=$user_id";
+$resultlicence=mysql_query($sqllicence,$connection) or die(mysql_error());
+$rowlicence=mysql_fetch_array($resultlicence);
+
+$sqltest="select *,count(*) as count from practicaltest where Userid=$user_id";
+$resulttest=mysql_query($sqltest,$connection) or die(mysql_error());
+
+$sqltorya="select * from theoreticaltest where Userid=$user_id";
+$resulttorya=mysql_query($sqltorya,$connection) or die(mysql_error());
+
+//echo $rowstudent[0];        
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -61,7 +87,10 @@ include("schooldata.php");
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-				        	  <a href="#"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية </a> <span class="divider"></span>
+				        	  <a href="school.php"> <i class="fa fa-home" aria-hidden="true"></i> الرئيسية </a> <span class="divider"></span>
+				           </li>
+                    <li>
+				        	  <a href="show-students.php"> <i  aria-hidden="true"></i> عرض الطلاب </a> <span class="divider"></span>
 				           </li>
 				           <li class="active">
 					          طلب الرخصة
@@ -97,9 +126,19 @@ include("schooldata.php");
                     	  </div>
                           <div class="row">
                              <div class="col-md-10">
-                              <h4> إلى إدارة الترخيص في - المحافظة </h4>
-                              <h4> أنا المذكور أدناه أطلب بهذا رخصة سياقة لمركبة ميكانيكية من نوع - نوع المركبة </h4>
-                              <h4> وبحوزتي رخصة سياقة رقم -الرقم من نوع-النوع </h4>
+                              <h4> إلى إدارة الترخيص في <?php echo $rowstudent['TrafficName']; ?>  </h4>
+                              <h4> أنا المذكور أدناه أطلب بهذا رخصة سياقة لمركبة ميكانيكية من نوع 
+                                <?php echo $rowstudent['Type']; ?>  </h4>
+                              <h4> وبحوزتي رخصة سياقة رقم <?php if(isset($rowlicence['LicenceNo']))
+                              echo $rowlicence['LicenceNo'];
+                              else
+                              echo "----";
+                               ?>
+                                  من نوع-النوع <?php if(isset($rowlicence['Type']))
+                              echo $rowlicence['Type'];
+                              else
+                              echo "----";
+                               ?></h4>
                              </div>
                           </div>
   <div class="row">
@@ -117,10 +156,10 @@ include("schooldata.php");
 				</thead>
 				<tbody>
 					<tr>
-						<td>علاء</td>
-                        <td>علاء</td>
-                        <td>علاء</td>
-                        <td>علاء</td> 	
+						            <td><?php echo $rowstudent['FirstName']; ?></td>
+                        <td><?php echo $rowstudent['FatherName']; ?></td>
+                        <td><?php echo $rowstudent['GFatherName']; ?></td>
+                        <td><?php echo $rowstudent['FamilyName']; ?></td> 	
 					</tr>	
                 </tbody>
                  <thead>
@@ -132,15 +171,19 @@ include("schooldata.php");
 				</thead>
                 <tbody>
 					<tr>
-						<td colspan="1">857016448</td>
-                        <td>ذكر</td>
-                        <td colspan="2">18-04-93</td>
+						<td colspan="1"><?php echo $rowstudent['IDN']; ?></td>
+                        <td><?php  if($rowstudent['FamilyName']=='f')
+                        echo "أنثى";
+                        else
+                        echo "ذكر";
+                         ?></td>
+                        <td colspan="2"><?php echo $rowstudent['DateOfBirth']; ?></td>
                         	
 					</tr>	
                 </tbody>
                 <tbody>
 					<tr>
-                       <td colspan="4"> <strong>العنوان:</strong>-العنوان</td>     	
+                       <td colspan="4"> <strong>العنوان:</strong><?php echo $rowstudent['Street']; ?></td>     	
 					</tr>	
                 </tbody>
 				
@@ -152,12 +195,21 @@ include("schooldata.php");
             <img  alt="Bootstrap Image Preview" src="images/neserna.png" class="default" />
         </div>
      </div>
+    
+     <?php if($rowstudent['submitted']==0){ ?>
      
       <div class="row">
         <div class="col-md-2 ">
-         <button type="submit" class="btn btn-warning btn-lg"><i class="fa fa-user-md" aria-hidden="true"></i> تقديم للفحص الطبي </button>
+          <form method="POST" >
+         <button type="submit" name="healthsubmit" class="btn btn-warning btn-lg"><i class="fa fa-user-md" aria-hidden="true"></i> تقديم للفحص الطبي </button>
+        </form>
         </div>
      </div>
+     
+     <?php
+     
+      } ?>
+    
      <hr>
      <div class="row">
 		<div class="col-md-12">
@@ -180,18 +232,25 @@ include("schooldata.php");
                           <br>
                           <div class="pp">
                               <p>  أصرح انني قمت بمعاينة السيد/ة:
-                                <ins>الاسم الكامل</ins> 
+                                <ins><?php  if($rowstudent['submitted']==1)
+                                echo $rowstudent['FirstName'].' '.$rowstudent['FatherName'].' '.$rowstudent['GFatherName'].' '.$rowstudent['FamilyName']; ?></ins> 
                                 <label class="form-check-inline">
-                                   <input class="form-check-input" type="radio" name="v" id="" value="option1" required> أهل/أهلة
+                                  
+                                   <input class="form-check-input" <?php  
+                                   if($rowstudent['submitted']==1){
+                                   if($rowstudent['appropriate']==1) {?>checked <?php }} ?>
+                                   type="radio" name="v" id="" value="option1" required> أهل/أهلة
                                 </label>
                                 <label class="form-check-inline ">
-                                  <input class="form-check-input" type="radio" name="v" id="" value="option2" required> غيرأهل/أهلة
+                                  <input class="form-check-input" <?php
+                                    if($rowstudent['submitted']==1){                                   
+                                    if($rowstudent['appropriate']==0) {?>checked <?php }} ?>type="radio" name="v" id="" value="option2" required> غيرأهل/أهلة
                                </label> 
                                 من ناحية صحته/صحتها. السوق بمركبة من النوع الذي قدم من أجله الطلب أعلاه وحسب قابليته المثبتة في القانون والتعليمات الموضحة أدناه: 
                               </p> 
                           </div>
                            <br> 
-                           <ins>المعلومات الاخرى</ins>
+                           <ins>المعلومات الاخرى: </ins> <?php   echo $rowstudent['details']; ?>
                          </th>
                       </tr>
                   </thead>
@@ -207,25 +266,40 @@ include("schooldata.php");
                         <tr>
                         <th>العين اليمنى</th>
                         <td>
-                          555555555555555555
+                          <?php  
+                          echo $rowstudent['righteye']; ?>
                         </td>
                         <td>
-                          لائق مع نظارات أوبدون
+                          <?php  
+                          if($rowstudent['rightglasses']==1)
+                          echo "لائق مع نظارات";
+                          else
+                          echo "لائق بدون نظارات";
+                          ?>
+                           
                         </td>
                         </tr>
                          <tr>
                         <th>العين اليسرى</th>
                         <td>
-                         666666666666666666
+                         <?php  
+                          echo $rowstudent['lefteye']; ?>
                         </td>
                         <td>
-                           لائق مع نظارات أوبدون
+                          <?php  
+                          if($rowstudent['leftglasses']==1)
+                          echo "لائق مع نظارات";
+                          else
+                          echo "لائق بدون نظارات";
+                          ?>
+
                         </td>
                         </tr>
                        <tr>
                         <th>زمرة الدم</th>
                          <td colspan="2">
-                           زمرة الدم 
+                           <?php 
+                          echo $rowstudent['bloodtype'];?> 
                          </td>
                        </tr>
                     </tbody>
@@ -233,7 +307,8 @@ include("schooldata.php");
                        <tr>
                          <th colspan="4">
                            <p> إسم الطبيب:
-                            <ins> إسم الطبيب الكامل</ins> 
+                            <ins> <?php  
+                          echo $rowstudent['DrName'];?> </ins> 
                            </p>                                    
                          </th>  
                        </tr>
@@ -243,14 +318,8 @@ include("schooldata.php");
            </div>
         </div>
         <br>
-          <div class="row">
-             <div class="form-group col-md-2">
-               <button type="submit" class="btn btn-success btn-lg"> <i class="fa fa-laptop" aria-hidden="true"></i> تقدم ل الإمتحان النظري </button>
-              </div>
-              <div class="form-group col-md-2">
-               <button type="submit" class="btn btn-danger btn-lg"> <i class="fa fa-car" aria-hidden="true"></i> تقدم ل الإمتحان العملي </button>
-              </div>
-         </div>
+        
+          
          <hr>
          <div class="row">
 		       <div class="col-md-12">
@@ -268,16 +337,38 @@ include("schooldata.php");
                      </tr>
                   </thead>
                   <tbody>
+                    <?php 
+                    $resultforbuttontorya="";
+                    while($rowtorya=mysql_fetch_array($resulttorya)){ 
+                     $resultforbuttontorya=$rowtorya['Result'];
+                      ?>
                     <tr>
-                      <td>شفوي</td>
-                      <td>41-5-12</td>
-                      <td>10:00</td>
-                      <td><span class="label label-danger">ناجح</span></td>
-                      <td>عوض الزعيتر</td>
-                      <td>5578787</td>   
+                      <td><?php echo $rowtorya['Method']; ?></td>
+                      <td><?php echo $rowtorya['Date']; ?></td>
+                      <td><?php echo $rowtorya['Time']; ?></td>
+                      <td><span class="label label-danger"><?php  
+                      if($rowtorya['Result']==1)
+                      echo "ناجح";
+                      else if($rowtorya['Result']==0)
+                      echo "راسب";
+                      else echo "";
+                       ?></span></td>
+                      <td><?php  echo $rowtorya['ExaminerName']; ?> </td>
+                      <td><?php  echo $rowtorya['ExaminerNo']; ?></td>   
                     </tr>
+                    <?php }?>
                   </tbody>
 		          	</table>
+                <?php if($resultforbuttontorya==0 && $rowstudent['submitted']==1) {?>
+                 <div class="row">
+             <div class="form-group col-md-2">
+               <button type="submit"
+               
+                class="btn btn-success btn-lg"> <i class="fa fa-laptop" aria-hidden="true"></i> تقدم للإمتحان النظري </button>
+              </div>
+              </div>
+                <?php } ?>
+                
                 <hr>
                 	<table class="table table-condensed table-bordered">
                   <thead>
@@ -292,16 +383,36 @@ include("schooldata.php");
                      </tr>
                   </thead>
                   <tbody>
+                    <?php $resultforbuttontest="";
+                    
+                     while($rowtest=mysql_fetch_array($resulttest))
+                           {$resultforbuttontest=$rowtest['Result'];
+                           ?>
                     <tr>
-                      <td>41-5-12</td>
-                      <td>11:00</td>
-                      <td>14-647-67</td>
-                      <td><span class="label label-danger">ناجح</span></td>
-                      <td>عوض الزعيتر</td>
-                      <td>5578787</td>   
+                      <td><?php echo $rowtest['Date']; ?></td>
+                      <td><?php echo $rowtest['Time']; ?></td>
+                      <td><?php echo $rowtest['CarNo']; ?></td>
+                      <td><span class="label label-danger"><?php  
+                      if($rowtest['Result']==1)
+                      echo "ناجح";
+                      else if($rowtest['Result']==0)
+                      echo "راسب";
+                      else echo "";
+                       ?></span></td>
+                      <td><?php echo $rowtest['ExaminerName']; ?> </td>
+                      <td><?php echo $rowtest['ExaminerNo']; ?></td>   
                     </tr>
+                    <?php } ?>
                   </tbody>
 		          	</table>
+               <div class="row">
+            <?php if($resultforbuttontest==0 && $rowstudent['submitted']==1) {?>
+              <div class="form-group col-md-2">
+               <button type="submit" 
+               class="btn btn-danger btn-lg"> <i class="fa fa-car" aria-hidden="true"></i> تقدم للإمتحان العملي </button>
+              </div>
+         </div>
+            <?php } ?>
               </div>
 		       </div>
          </div>
@@ -356,5 +467,8 @@ include("schooldata.php");
 </body>
 </html>
  <?php 
+}else header("Location:show-students.php");
  } else 
-header("Location:login.php");?>
+header("Location:login.php");
+
+?>
